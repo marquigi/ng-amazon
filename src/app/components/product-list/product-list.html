@@ -1,1 +1,7 @@
-<p>product-list works!</p>
+<!-- <pre>
+    {{ products | json }}
+</pre> -->
+
+@for (p of products; track $index) {
+<div>{{ p.title }}</div>
+}

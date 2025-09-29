@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product-service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-list',
@@ -13,9 +14,11 @@ export class ProductList implements OnInit {
   // che viene eseguito automaticamente da Angular all’inizializzazione del componente.
 
 
-  products: any[] = [];
+  // products: any[] = [];
   // Questa proprietà è un array che conterrà i prodotti. Per ora utilizza "any" come tipo generico,
   // ma in futuro sarebbe meglio sostituirlo con un’interfaccia tipizzata per maggiore sicurezza e chiarezza.
+  products: Product[] = [];
+  // Cambio il tipo e importo il tipo da models/product
 
   productService: ProductService = inject(ProductService);
   // Questa riga crea un'istanza del servizio ProductService usando la funzione "inject()" di Angular.
@@ -23,8 +26,12 @@ export class ProductList implements OnInit {
   // È un'alternativa al classico metodo con il costruttore.
 
   ngOnInit(): void {
-    this.productService.getProducts();
+    // "ngOnInit()" viene eseguito automaticamente quando il componente viene inizializzato.
+    // È il posto giusto per recuperare i dati, ad esempio chiamando il servizio per caricare i prodotti.
+    this.productService.getProducts()
+      .then(r => this.products = r.products)
+      .catch(err => console.log("ERRORE NEL RECUPERO DEI PRODOTTI"));
+    // NOTA
   }
-  // "ngOnInit()" viene eseguito automaticamente quando il componente viene inizializzato.
-  // È il posto giusto per recuperare i dati, ad esempio chiamando il servizio per caricare i prodotti.
+
 }
