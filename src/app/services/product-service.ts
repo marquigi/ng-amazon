@@ -7,6 +7,9 @@ import { ProductsResponse } from '../models/product';
 export class ProductService {
   constructor() { }
 
+  // NOTA
+  ricerca: string = "";
+
   async getProducts(): Promise<ProductsResponse> {
     // Una funzione "asincrona" (async) è una funzione che:
     // - restituisce sempre una Promise, anche se usi "return" normale
@@ -30,5 +33,11 @@ export class ProductService {
     return data;
     // restituisce i dati a chi ha chiamato la funzione
     // essendo async, in realtà torna una Promise che risolve con "data"
+  }
+
+  aggiornaStringRicerca(r: string) {
+    console.log("NUOVA RICERCA:", r);
+    this.ricerca = r;
+    // NOTA
   }
 }

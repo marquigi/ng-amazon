@@ -31,7 +31,8 @@ export class ProductList implements OnInit {
     this.productService.getProducts()
       .then(r => this.products = r.products)
       .catch(err => console.log("ERRORE NEL RECUPERO DEI PRODOTTI"));
-    // NOTA
+    // Qui viene gestita la risposta del servizio: "r" rappresenta l'oggetto restituito dalla promessa,
+    // e la proprietà "products" di "r" viene assegnata all'array locale "this.products" per visualizzarli nel template.
   }
 
 }
