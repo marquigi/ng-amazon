@@ -1,0 +1,18 @@
+<!-- Gruppo di pulsanti che serve per filtrare i post per categoria -->
+<div class="btn-group mb-2" role="group">
+
+    <!-- Bottone che mostra tutti i post -->
+    <button type="button" class="btn btn-outline-secondary">Tutti</button>
+
+    <!-- Ciclo @for di Angular per creare un bottone per ogni categoria -->
+    <!-- 'c of categories' scorre l’array categories -->
+    <!-- 'track $index' serve a tenere traccia dell’indice per ottimizzare il rendering -->
+    @for (c of categories; track $index) {
+    <!-- Bottone che mostra solo i prodotti della categoria selezionata -->
+
+    <button type="button" class="btn btn-outline-secondary">
+        {{ c.name }} <!-- Mostra il nome della categoria -->
+    </button>
+    }
+
+</div>

@@ -2,6 +2,7 @@
     {{ products | json }}
 </pre> -->
 
-@for (p of products; track $index) {
+<!-- NOTA -->
+@for (p of filteredProduct(); track $index) {
 <div>{{ p.title }}</div>
 }

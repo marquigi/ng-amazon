@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProductsResponse } from '../models/product';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,34 @@ export class ProductService {
     // "data" conterrà i prodotti già pronti come oggetto/array
 
     console.log(data)
+
+    return data;
+    // restituisce i dati a chi ha chiamato la funzione
+    // essendo async, in realtà torna una Promise che risolve con "data"
+  }
+
+  async getCategories() {
+    const response = await fetch("https://dummyjson.com/products/categories");
+    // NOTA
+
+    const data: Category[] = await response.json();
+    // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
+    // anche questo è asincrono, quindi serve "await"
+    // "data" conterrà i prodotti già pronti come oggetto/array
+
+    return data;
+    // restituisce i dati a chi ha chiamato la funzione
+    // essendo async, in realtà torna una Promise che risolve con "data"
+  }
+
+  async searchProducts(q: string) {
+    const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURI(q)}`);
+    // NOTA
+
+    const data = await response.json();
+    // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
+    // anche questo è asincrono, quindi serve "await"
+    // "data" conterrà i prodotti già pronti come oggetto/array
 
     return data;
     // restituisce i dati a chi ha chiamato la funzione
