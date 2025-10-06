@@ -7,7 +7,8 @@ import { ProductsResponse } from '../models/product';
 export class ProductService {
   constructor() { }
 
-  // NOTA
+  // Dichiarazione di una proprietà "ricerca" di tipo stringa, inizialmente vuota
+  // Sarà usata per memorizzare il testo inserito nella barra di ricerca
   ricerca: string = "";
 
   async getProducts(): Promise<ProductsResponse> {
@@ -38,6 +39,7 @@ export class ProductService {
   aggiornaStringRicerca(r: string) {
     console.log("NUOVA RICERCA:", r);
     this.ricerca = r;
-    // NOTA
+    // Aggiorna il valore della proprietà "ricerca" con il testo ricevuto come parametro
+    // Serve a tenere sincronizzato il valore digitato nella barra di ricerca
   }
 }

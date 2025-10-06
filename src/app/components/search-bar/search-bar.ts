@@ -14,7 +14,8 @@ export class SearchBar {
 
   productsService: ProductService = inject(ProductService);
 
-  // NOTA
+  // Metodo chiamato al click del pulsante "Cerca"
+  // Passa la stringa digitata alla funzione del servizio che aggiorna la ricerca
   eseguiRicerca() {
     this.productsService.aggiornaStringRicerca(this.stringaRicerca);
   }
