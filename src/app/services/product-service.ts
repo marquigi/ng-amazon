@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ProductsResponse } from '../models/product';
+import { Product, ProductsResponse } from '../models/product';
 import { Category } from '../models/category';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class ProductService {
   // Dichiarazione di una proprietà "ricerca" di tipo stringa, inizialmente vuota
   // Sarà usata per memorizzare il testo inserito nella barra di ricerca
   ricerca: string = "";
+
 
   async getProducts(): Promise<ProductsResponse> {
     // Una funzione "asincrona" (async) è una funzione che:
@@ -25,7 +26,7 @@ export class ProductService {
     // "await" blocca l'esecuzione finché non arriva la risposta
     // "response" conterrà l'oggetto della risposta HTTP
 
-    const data = await response.json();
+    const data: ProductsResponse = await response.json();
     // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
     // anche questo è asincrono, quindi serve "await"
     // "data" conterrà i prodotti già pronti come oggetto/array
@@ -36,6 +37,32 @@ export class ProductService {
     // restituisce i dati a chi ha chiamato la funzione
     // essendo async, in realtà torna una Promise che risolve con "data"
   }
+
+
+  // NOTA modifica i commenti di tutta la funzione
+  async getProductsById(id: string) {
+    // Una funzione "asincrona" (async) è una funzione che:
+    // - restituisce sempre una Promise, anche se usi "return" normale
+    // - permette di usare "await" per aspettare il risultato di operazioni lente (es. fetch)
+    // - non blocca il resto del programma: mentre questa funzione aspetta, altre parti del codice possono continuare
+
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    // "fetch" fa una richiesta HTTP (qui di tipo GET) all'URL indicato
+    // "await" blocca l'esecuzione finché non arriva la risposta
+    // "response" conterrà l'oggetto della risposta HTTP
+
+    const data: Product = await response.json();
+    // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
+    // anche questo è asincrono, quindi serve "await"
+    // "data" conterrà i prodotti già pronti come oggetto/array
+
+    console.log(data)
+
+    return data;
+    // restituisce i dati a chi ha chiamato la funzione
+    // essendo async, in realtà torna una Promise che risolve con "data"
+  }
+
 
   async getCategories() {
     const response = await fetch("https://dummyjson.com/products/categories");
@@ -53,6 +80,7 @@ export class ProductService {
     // essendo async, in realtà torna una Promise che risolve con "data"
   }
 
+
   async searchProducts(q: string) {
     const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURI(q)}`);
     // "fetch" invia una richiesta HTTP (GET) all'endpoint di ricerca, includendo la query "q" codificata
@@ -67,6 +95,7 @@ export class ProductService {
     // restituisce i dati a chi ha chiamato la funzione
     // essendo async, in realtà torna una Promise che risolve con "data"
   }
+
 
   aggiornaStringRicerca(r: string) {
     console.log("NUOVA RICERCA:", r);

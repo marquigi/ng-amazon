@@ -6,5 +6,8 @@
      "p of filteredProduct()" indica che per ogni elemento della lista filtrata viene creato un blocco di markup.
      "track $index" usa l'indice come chiave per tenere traccia degli elementi e migliorare le prestazioni. -->
 @for (p of filteredProduct(); track $index) {
-<div>{{ p.title }}</div>
+<div>
+    <a [routerLink]="['/','prodotti', p.id]">{{ p.title }}</a>
+    <!-- NOTA -->
+</div>
 }
