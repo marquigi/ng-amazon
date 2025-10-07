@@ -39,7 +39,9 @@ export class ProductService {
 
   async getCategories() {
     const response = await fetch("https://dummyjson.com/products/categories");
-    // NOTA
+    // Il metodo "ngOnInit()" viene chiamato automaticamente quando il componente viene inizializzato.
+    // Qui recuperiamo la lista delle categorie dal servizio e la salviamo nella proprietà "categories".
+    // ".then()" gestisce il risultato positivo della Promise, mentre ".catch()" gestisce eventuali errori.
 
     const data: Category[] = await response.json();
     // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
@@ -53,7 +55,8 @@ export class ProductService {
 
   async searchProducts(q: string) {
     const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURI(q)}`);
-    // NOTA
+    // "fetch" invia una richiesta HTTP (GET) all'endpoint di ricerca, includendo la query "q" codificata
+    // "encodeURI(q)" assicura che eventuali spazi o caratteri speciali nella stringa di ricerca non causino errori nell'URL
 
     const data = await response.json();
     // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript

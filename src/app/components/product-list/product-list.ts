@@ -35,10 +35,11 @@ export class ProductList implements OnInit {
   }
 
   filteredProduct() {
-    // NOTA
+    // "filteredProduct()" restituisce la lista dei prodotti filtrata in base al testo di ricerca.
+    // Se la proprietà "ricerca" del servizio non è vuota, filtra i prodotti confrontando il titolo con la stringa cercata.
     if (this.productService.ricerca != "") {
       return this.products.filter(x => x.title.toLowerCase().includes(this.productService.ricerca.toLowerCase()));
-      // NOTA toLowerCase
+      // "toLowerCase()" converte entrambe le stringhe in minuscolo, così il confronto non è sensibile alle maiuscole/minuscole.
     } else {
       return this.products;
     }

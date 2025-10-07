@@ -14,7 +14,9 @@ export class CategoryButtons implements OnInit {
 
   productsService: ProductService = inject(ProductService);
 
-  // NOTA
+  // Il metodo "ngOnInit()" viene chiamato automaticamente quando il componente viene inizializzato.
+  // Qui recuperiamo la lista delle categorie dal servizio e la salviamo nella proprietà "categories".
+  // ".then()" gestisce il risultato positivo della Promise, mentre ".catch()" gestisce eventuali errori.
   ngOnInit(): void {
     this.productsService.getCategories()
       .then(r => this.categories = r)
