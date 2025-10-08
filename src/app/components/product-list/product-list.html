@@ -8,6 +8,6 @@
 @for (p of filteredProduct(); track $index) {
 <div>
     <a [routerLink]="['/','prodotti', p.id]">{{ p.title }}</a>
-    <!-- NOTA -->
+    <!-- L'attributo [routerLink] è una binding property di Angular che permette di definire dinamicamente il percorso di navigazione. In questo caso, crea un link che porta alla pagina del prodotto con l'id specificato, costruendo un array di segmenti di percorso. -->
 </div>
 }

@@ -1,15 +1,16 @@
 @if (product) {
 <div class="card">
-    <!-- NOTA perchè [] -->
+
     <img [src]="product.thumbnail" [alt]="product.title" class="card-img-top">
+    <!-- In Angular, [src] e [alt] sono binding delle proprietà che collegano la proprietà dell'elemento ai dati del componente. Questo assicura che la sorgente dell'immagine e il testo alternativo si aggiornino dinamicamente in base alle proprietà del prodotto. -->
     <div class="card-body">
         <h5 class="card-title">{{ product.title }}</h5>
 
         <p class="card-text">{{ product.description }}</p>
 
         <p class="card-text">
-            <!-- NOTA cos'è small -->
             <small class="text-muted"> Price: ${{ product.price }}</small>
+            <!-- small è un tag HTML che rende il testo più piccolo e meno prominente -->
         </p>
     </div>
 </div>
