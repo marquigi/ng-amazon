@@ -22,7 +22,7 @@ export const routes: Routes = [
     },
     {
         path: "prodotti/:id",
-        // NOTA cos'è /:
+        // ':id' indica un parametro dinamico nell'URL, cioè il valore dell'ID del prodotto che sarà letto dal componente
         component: ProductDetail
     }
 ];

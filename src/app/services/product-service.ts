@@ -8,23 +8,18 @@ import { Category } from '../models/category';
 export class ProductService {
   constructor() { }
 
-  // Dichiarazione di una proprietà "ricerca" di tipo stringa, inizialmente vuota
-  // Sarà usata per memorizzare il testo inserito nella barra di ricerca
+  // Proprietà per memorizzare il testo inserito nella barra di ricerca
   ricerca: string = "";
 
 
   async getProducts(): Promise<ProductsResponse> {
-    // Una funzione "asincrona" (async) è una funzione che:
-    // - restituisce sempre una Promise, anche se usi "return" normale
-    // - permette di usare "await" per aspettare il risultato di operazioni lente (es. fetch)
-    // - non blocca il resto del programma: mentre questa funzione aspetta, altre parti del codice possono continuare
-    // - ": Promise<ProductsResponse>" indica che restituisce una Promise
-    //    che, quando completata, conterrà un valore di tipo ProductsResponse
+    // "async" indica che la funzione è asincrona e restituisce una Promise
+    // ": Promise<ProductsResponse>" specifica il tipo della Promise che questa funzione restituisce
+    // Le funzioni asincrone permettono di usare "await" per attendere risultati di operazioni asincrone senza bloccare l'esecuzione del programma
 
     const response = await fetch("https://dummyjson.com/products");
-    // "fetch" fa una richiesta HTTP (qui di tipo GET) all'URL indicato
-    // "await" blocca l'esecuzione finché non arriva la risposta
-    // "response" conterrà l'oggetto della risposta HTTP
+    // "fetch" è una funzione globale che invia una richiesta HTTP (di default GET) all'URL specificato e restituisce una Promise
+    // "await" sospende l'esecuzione della funzione fino a quando la Promise restituita da fetch non viene risolta, ottenendo l'oggetto Response
 
     const data: ProductsResponse = await response.json();
     // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
@@ -39,17 +34,15 @@ export class ProductService {
   }
 
 
-  // NOTA modifica i commenti di tutta la funzione
+  // Funzione che riceve un ID e restituisce i dettagli del prodotto corrispondente dal server
   async getProductsById(id: string) {
-    // Una funzione "asincrona" (async) è una funzione che:
-    // - restituisce sempre una Promise, anche se usi "return" normale
-    // - permette di usare "await" per aspettare il risultato di operazioni lente (es. fetch)
-    // - non blocca il resto del programma: mentre questa funzione aspetta, altre parti del codice possono continuare
+    // "id: string" indica che la funzione accetta un parametro "id" di tipo stringa
+    // La funzione è asincrona e restituisce implicitamente una Promise
 
     const response = await fetch(`https://dummyjson.com/products/${id}`);
-    // "fetch" fa una richiesta HTTP (qui di tipo GET) all'URL indicato
-    // "await" blocca l'esecuzione finché non arriva la risposta
-    // "response" conterrà l'oggetto della risposta HTTP
+    // Template literal (backticks) permette di inserire l'espressione ${id} all'interno della stringa URL
+    // "fetch" invia una richiesta GET all'URL dinamico costruito con l'id passato come parametro
+    // "await" attende che la Promise di fetch venga risolta con la risposta HTTP
 
     const data: Product = await response.json();
     // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
@@ -59,21 +52,20 @@ export class ProductService {
     console.log(data)
 
     return data;
-    // restituisce i dati a chi ha chiamato la funzione
-    // essendo async, in realtà torna una Promise che risolve con "data"
+    // Restituisce i dati del prodotto come risultato della Promise della funzione asincrona
   }
 
 
+  // Funzione asincrona che recupera la lista delle categorie
   async getCategories() {
     const response = await fetch("https://dummyjson.com/products/categories");
-    // Il metodo "ngOnInit()" viene chiamato automaticamente quando il componente viene inizializzato.
-    // Qui recuperiamo la lista delle categorie dal servizio e la salviamo nella proprietà "categories".
-    // ".then()" gestisce il risultato positivo della Promise, mentre ".catch()" gestisce eventuali errori.
+    // "fetch" invia una richiesta GET all'endpoint delle categorie
+    // "await" attende la risposta HTTP
+
 
     const data: Category[] = await response.json();
-    // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
-    // anche questo è asincrono, quindi serve "await"
-    // "data" conterrà i prodotti già pronti come oggetto/array
+    // "response.json()" legge e converte il corpo della risposta JSON in un array di oggetti Category
+    // "await" sospende l'esecuzione finché la conversione non è completata
 
     return data;
     // restituisce i dati a chi ha chiamato la funzione
@@ -81,6 +73,7 @@ export class ProductService {
   }
 
 
+  // Funzione asincrona che esegue una ricerca di prodotti in base a una query string "q"
   async searchProducts(q: string) {
     const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURI(q)}`);
     // "fetch" invia una richiesta HTTP (GET) all'endpoint di ricerca, includendo la query "q" codificata
@@ -97,6 +90,8 @@ export class ProductService {
   }
 
 
+  // Funzione che aggiorna la proprietà "ricerca" con la nuova stringa ricevuta come parametro "r"
+  // "r: string" indica che il parametro è una stringa
   aggiornaStringRicerca(r: string) {
     console.log("NUOVA RICERCA:", r);
     this.ricerca = r;

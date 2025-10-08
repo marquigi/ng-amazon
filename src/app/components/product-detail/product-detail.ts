@@ -15,19 +15,19 @@ export class ProductDetail implements OnInit {
 
   ps: ProductService = inject(ProductService);
 
-  // NOTA
+  // Usa la funzione inject per ottenere un'istanza di ActivatedRoute, che permette di accedere ai parametri della route corrente
   route: ActivatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
     // Recupero l'id dall'indirizzo
-    // NOTA
+    // Recupera il valore dell'ID passato nell'URL per poi usarlo per richiedere il prodotto al servizio
     const id = this.route.snapshot.paramMap.get("id")
     console.log(id);
 
     // con l'id recuperato chiamo il metodo del servizio
     // Che recupera dal server un prodotto in base all'id
     this.ps.getProductsById(id!)
-      // NOTA
+      // Quando la Promise del servizio si risolve, assegna il prodotto alla proprietà 'product' del componente
       .then(prodotto => this.product = prodotto)
       .catch(err => console.log(err))
   }
