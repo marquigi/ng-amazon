@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Product, ProductsResponse } from '../models/product';
 import { Category } from '../models/category';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +12,34 @@ export class ProductService {
   // Proprietà per memorizzare il testo inserito nella barra di ricerca
   ricerca: string = "";
 
+  http: HttpClient = inject(HttpClient);
+  // NOTA
 
-  async getProducts(): Promise<ProductsResponse> {
+  async getProducts() {
+    // Metodo con HttpClient
+    return this.http.get("https://dummyjson.com/products")
+
+    // Metodo senza utilizzare HttpClient
     // "async" indica che la funzione è asincrona e restituisce una Promise
-    // ": Promise<ProductsResponse>" specifica il tipo della Promise che questa funzione restituisce
     // Le funzioni asincrone permettono di usare "await" per attendere risultati di operazioni asincrone senza bloccare l'esecuzione del programma
 
-    const response = await fetch("https://dummyjson.com/products");
-    // "fetch" è una funzione globale che invia una richiesta HTTP (di default GET) all'URL specificato e restituisce una Promise
-    // "await" sospende l'esecuzione della funzione fino a quando la Promise restituita da fetch non viene risolta, ottenendo l'oggetto Response
+    //   const response = await fetch("https://dummyjson.com/products");
+    //   // "fetch" è una funzione globale che invia una richiesta HTTP (di default GET) all'URL specificato e restituisce una Promise
+    //   // "await" sospende l'esecuzione della funzione fino a quando la Promise restituita da fetch non viene risolta, ottenendo l'oggetto Response
 
-    const data: ProductsResponse = await response.json();
-    // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
-    // anche questo è asincrono, quindi serve "await"
-    // "data" conterrà i prodotti già pronti come oggetto/array
+    //   const data: ProductsResponse = await response.json();
+    //   // ".json()" legge il corpo della risposta e lo trasforma da JSON a oggetto JavaScript
+    //   // anche questo è asincrono, quindi serve "await"
+    //   // "data" conterrà i prodotti già pronti come oggetto/array
 
-    console.log(data)
+    //   console.log(data)
 
-    return data;
-    // restituisce i dati a chi ha chiamato la funzione
-    // essendo async, in realtà torna una Promise che risolve con "data"
+    //   return data;
+    //   // restituisce i dati a chi ha chiamato la funzione
+    //   // essendo async, in realtà torna una Promise che risolve con "data"
   }
 
-
+  // Metodo senza utilizzare HttpClient
   // Funzione che riceve un ID e restituisce i dettagli del prodotto corrispondente dal server
   async getProductsById(id: string) {
     // "id: string" indica che la funzione accetta un parametro "id" di tipo stringa
@@ -55,7 +61,7 @@ export class ProductService {
     // Restituisce i dati del prodotto come risultato della Promise della funzione asincrona
   }
 
-
+  // Metodo senza utilizzare HttpClient
   // Funzione asincrona che recupera la lista delle categorie
   async getCategories() {
     const response = await fetch("https://dummyjson.com/products/categories");
@@ -72,7 +78,7 @@ export class ProductService {
     // essendo async, in realtà torna una Promise che risolve con "data"
   }
 
-
+  // Metodo senza utilizzare HttpClient
   // Funzione asincrona che esegue una ricerca di prodotti in base a una query string "q"
   async searchProducts(q: string) {
     const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURI(q)}`);
