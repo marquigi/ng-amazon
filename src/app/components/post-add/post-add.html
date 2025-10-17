@@ -1,0 +1,46 @@
+<form (ngSubmit)="aggiungiPost()" #laForm="ngForm">
+    <!-- Il form chiama "aggiungiPost()" quando viene inviato.
+         "#laForm" permette di controllare se il form è valido o no. -->
+    <div class="mb-3">
+        <label for="title" class="form-label">Titolo</label>
+        <!-- Input per il titolo:
+             - "[(ngModel)]" collega il valore a "model.title"
+             - "required" rende il campo obbligatorio
+             - "#inputTitle='ngModel'" crea una variabile locale per controllare validità e stato
+             - "[ngClass]" aggiunge la classe 'is-invalid' se l'input è invalido e l'utente ha già modificato il campo -->
+        <input type="text" class="form-control" [(ngModel)]="model.title" name="title" id="title" required
+            #inputTitle="ngModel" [ngClass]="{`is-invalid` : inputTitle.invalid && inputTitle.dirty}">
+
+        <!-- Mostra il messaggio di errore "Titolo obbligatorio" solo se l'input non è valido
+             e l'utente ha già modificato il campo (dirty) -->
+        @if (inputTitle.invalid && inputTitle.dirty) {
+        <div style="color: red">Titolo obbligatorio</div>
+        }
+
+    </div>
+
+    <div class="mb-3">
+        <label for="body" class="form-label">Testo</label>
+        <!-- Textarea per il corpo del post:
+             - "[(ngModel)]" collega il valore a "model.body"
+             - "required" rende obbligatorio il campo
+             - "minlength" impone almeno 3 caratteri
+             - "#inputBody='ngModel'" crea variabile per controllare stato e validità -->
+        <textarea class="form-control" [(ngModel)]="model.body" name="body" id="body" #inputBody="ngModel" required
+            minlength="3">
+        </textarea>
+        @if (inputBody.invalid) {
+        <div style="color: red">Testo obbligatorio</div>
+        }
+    </div>
+    <!-- Pulsante "Salva": disabilitato se il form non è valido -->
+    <button type="submit" class="btn btn-primary" [disabled]="!laForm.valid">Salva</button>
+
+</form>
+
+<!-- <pre>{{ laForm.valid }}</pre> -->
+
+<!-- Mostra un messaggio se il form non è valido -->
+@if(!laForm.valid){
+<div>Form non è valida</div>
+}

@@ -3,6 +3,7 @@ import { Product, ProductsResponse } from '../models/product';
 import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { NuovoPost } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -113,5 +114,9 @@ export class ProductService {
     this.ricerca = r;
     // Aggiorna il valore della proprietà "ricerca" con il testo ricevuto come parametro
     // Serve a tenere sincronizzato il valore digitato nella barra di ricerca
+  }
+
+  addPost(post: NuovoPost) {
+
   }
 }

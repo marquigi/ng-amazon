@@ -3,6 +3,7 @@ import { ProductList } from './components/product-list/product-list';
 import { Home } from './components/home/home';
 import { Contatti } from './components/contatti/contatti';
 import { ProductDetail } from './components/product-detail/product-detail';
+import { PostAdd } from './components/post-add/post-add';
 
 // L'array 'routes' definisce le rotte principali dell'app. 
 export const routes: Routes = [
@@ -24,5 +25,9 @@ export const routes: Routes = [
         path: "prodotti/:id",
         // ':id' indica un parametro dinamico nell'URL, cioè il valore dell'ID del prodotto che sarà letto dal componente
         component: ProductDetail
+    },
+    {
+        path: "nuovo-post",
+        component: PostAdd
     }
 ];
