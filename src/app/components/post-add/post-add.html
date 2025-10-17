@@ -1,46 +1,54 @@
 <form (ngSubmit)="aggiungiPost()" #laForm="ngForm">
-    <!-- Il form chiama "aggiungiPost()" quando viene inviato.
-         "#laForm" permette di controllare se il form è valido o no. -->
+    <!-- Questo form chiama la funzione "aggiungiPost()" quando premi Salva.
+         La variabile "#laForm" ci permette di controllare se tutti i campi sono validi. -->
+
     <div class="mb-3">
         <label for="title" class="form-label">Titolo</label>
-        <!-- Input per il titolo:
-             - "[(ngModel)]" collega il valore a "model.title"
-             - "required" rende il campo obbligatorio
-             - "#inputTitle='ngModel'" crea una variabile locale per controllare validità e stato
-             - "[ngClass]" aggiunge la classe 'is-invalid' se l'input è invalido e l'utente ha già modificato il campo -->
+
+        <!-- Campo titolo:
+             - "[(ngModel)]='model.title'" collega l'input alla proprietà "model.title" nel codice.
+             - "required" significa che devi scrivere qualcosa, non può essere vuoto.
+             - "#inputTitle='ngModel'" crea una variabile "inputTitle" che ti dice se il campo è valido,
+               se è stato modificato, o se è stato cliccato.
+             - "[ngClass]" aggiunge la classe 'is-invalid' (rosso) se il campo è sbagliato e l'utente ha già scritto qualcosa. -->
         <input type="text" class="form-control" [(ngModel)]="model.title" name="title" id="title" required
             #inputTitle="ngModel" [ngClass]="{`is-invalid` : inputTitle.invalid && inputTitle.dirty}">
 
-        <!-- Mostra il messaggio di errore "Titolo obbligatorio" solo se l'input non è valido
-             e l'utente ha già modificato il campo (dirty) -->
+        <!-- Messaggio di errore titolo:
+             Mostra "Titolo obbligatorio" solo se il campo non è valido
+             e l'utente ha già provato a scrivere qualcosa. -->
         @if (inputTitle.invalid && inputTitle.dirty) {
         <div style="color: red">Titolo obbligatorio</div>
         }
-
     </div>
 
     <div class="mb-3">
         <label for="body" class="form-label">Testo</label>
-        <!-- Textarea per il corpo del post:
-             - "[(ngModel)]" collega il valore a "model.body"
-             - "required" rende obbligatorio il campo
-             - "minlength" impone almeno 3 caratteri
-             - "#inputBody='ngModel'" crea variabile per controllare stato e validità -->
+
+        <!-- Campo testo:
+             - "[(ngModel)]='model.body'" collega la textarea alla proprietà "model.body"
+             - "required" obbliga a scrivere qualcosa
+             - "minlength='3'" significa che ci devono essere almeno 3 caratteri
+             - "#inputBody='ngModel'" crea una variabile per controllare se il campo è valido o modificato -->
         <textarea class="form-control" [(ngModel)]="model.body" name="body" id="body" #inputBody="ngModel" required
             minlength="3">
         </textarea>
+
+        <!-- Messaggio di errore testo:
+             Mostra "Testo obbligatorio" se il campo non è valido -->
         @if (inputBody.invalid) {
         <div style="color: red">Testo obbligatorio</div>
         }
     </div>
-    <!-- Pulsante "Salva": disabilitato se il form non è valido -->
+
+    <!-- Pulsante Salva:
+         Disabilitato se il form non è valido -->
     <button type="submit" class="btn btn-primary" [disabled]="!laForm.valid">Salva</button>
 
 </form>
 
-<!-- <pre>{{ laForm.valid }}</pre> -->
-
-<!-- Mostra un messaggio se il form non è valido -->
+<!-- Messaggio generale:
+     Mostra "Form non è valida" se qualche campo del form non è valido -->
 @if(!laForm.valid){
 <div>Form non è valida</div>
 }
