@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product-service';
-import { Product } from '../../models/product';
+import { Product, ProductsResponse } from '../../models/product';
 import { RouterModule } from '@angular/router';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -25,14 +26,39 @@ export class ProductList implements OnInit {
   products: Product[] = [];
   // Cambio il tipo e importo il tipo da models/product
 
+  // Metodo con getProducts()
+  // ngOnInit(): void {
+  // "ngOnInit()" viene eseguito automaticamente quando il componente viene inizializzato.
+  // È il posto giusto per recuperare i dati, ad esempio chiamando il servizio per caricare i prodotti.
+  // this.productService.getProducts()
+  //   .then(r => this.products = r.products)
+  //   .catch(err => console.log("ERRORE NEL RECUPERO DEI PRODOTTI"));
+  // Qui viene gestita la risposta del servizio: "r" rappresenta l'oggetto restituito dalla promessa,
+  // e la proprietà "products" di "r" viene assegnata all'array locale "this.products" per visualizzarli nel template.
+  // }
+
+  // Metodo con getProductsObservable()
   ngOnInit(): void {
-    // "ngOnInit()" viene eseguito automaticamente quando il componente viene inizializzato.
-    // È il posto giusto per recuperare i dati, ad esempio chiamando il servizio per caricare i prodotti.
-    this.productService.getProducts()
-      .then(r => this.products = r.products)
-      .catch(err => console.log("ERRORE NEL RECUPERO DEI PRODOTTI"));
-    // Qui viene gestita la risposta del servizio: "r" rappresenta l'oggetto restituito dalla promessa,
-    // e la proprietà "products" di "r" viene assegnata all'array locale "this.products" per visualizzarli nel template.
+    this.productService
+      .getProductsObservable()
+      // Chiama il servizio per prendere i prodotti
+      .pipe(catchError(err => {
+        // catchError gestisce gli errori senza far crashare il programma
+        console.log("ERRORE NEL RECUPERO DEI PRODOTTI");
+
+        // Gestisce l'errore restituendo un valore di default con struttura ProductsResponse, usando 'of' per creare un Observable
+        const valoreErrore: ProductsResponse = { limit: 0, total: 0, skip: 0, products: [] };
+        return of(valoreErrore);
+
+        // Oppure senza const valore...:
+        // return of(undefined);
+      }))
+      .subscribe(r => {
+        if (r) {
+          this.products = r.products;
+        }
+        // subscribe prende i dati finali e li salva nella variabile products
+      });
   }
 
   filteredProduct() {
